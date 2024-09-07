@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zookeeper
+  namespace: test-dev
+spec:
+  serviceName: "zookeeper-hl-service"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "Zookeepers"
+  template:
+    metadata:
+      labels:
+        app: "Zookeepers"
+    spec:
+      containers:
+      - name: test2
+        image: sachin456/zookeeper:test
+        env:
+          - name: "ZOO_CLIENT_PORT"
+            value: "2181"
+        ports:
+          - containerPort: 2181
+            name: zoo-port
+        

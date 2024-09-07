@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: test-dev
+  name: test2
+spec:
+  containers:
+    - name: test2
+      image: sachin456/housekeeping:v0
+      env:
+        - name: name
+          value: "ritu"
+        - name: PORT
+          value: "9092"

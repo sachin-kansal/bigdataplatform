@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+  namespace: test-dev
+spec:
+  serviceName: "broker-hl-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "Brokers"
+  template:
+    metadata:
+      labels:
+        app: "Brokers"
+    spec:
+      containers:
+      - name: broker
+        image: sachin456/kafkaserver:v3
+        env:
+          - name: PORT
+            value: "9093"
+          - name: LOG_DIR
+            value: "/usr/logs"
+          - name: ZOOKEEPER_IP
+            value: "zookeeper-service.test-dev.svc.cluster.local"
+          - name: zPORT
+            value: "2181"
+          - name: LISTENER_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        ports:
+          - containerPort: 9093
+            name: broker-port
